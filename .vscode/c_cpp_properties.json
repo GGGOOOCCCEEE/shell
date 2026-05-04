@@ -4,18 +4,19 @@
             "name": "MinGW",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/msys64/ucrt64/include",
-                "C:/msys64/usr/include"
+                "/usr/include",
+                "/usr/local/include",
+                "/usr/include/x86_64-linux-gnu"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "C:/msys64/ucrt64/bin/gcc.exe",
+            "compilerPath": "/usr/lib64/ccache/gcc",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-gcc-x64"
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4

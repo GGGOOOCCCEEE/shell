@@ -2,15 +2,15 @@
         "tasks": [
                 {
                         "type": "cppbuild",
-                        "label": "C/C++: gcc build active file",
-                        "command": "C:/msys64/ucrt64/bin/gcc.exe",
+                        "label": "C/C++: gcc build active file (WSL)",
+                        "command": "/usr/bin/gcc",
                         "args": [
                                 "-g",
                                 "-std=c17",
                                 "-Wall",
                                 "-Wextra",
                                 "-o",
-                                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                                "${fileDirname}/${fileBasenameNoExtension}",
                                 "${file}"
                         ],
                         "options": {
@@ -27,17 +27,17 @@
                 },
                 {
                         "type": "cppbuild",
-                        "label": "C/C++: gcc.exe build active file",
-                        "command": "C:/msys64/ucrt64/bin/gcc.exe",
+                        "label": "C/C++: gcc.exe build active file (WSL)",
+                        "command": "/usr/bin/gcc",
                         "args": [
                                 "-fdiagnostics-color=always",
                                 "-g",
                                 "${file}",
                                 "-o",
-                                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                                "${fileDirname}/${fileBasenameNoExtension}"
                         ],
                         "options": {
-                                "cwd": "C:/msys64/ucrt64/bin"
+                                "cwd": "${workspaceFolder}"
                         },
                         "problemMatcher": [
                                 "$gcc"

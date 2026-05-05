@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <limits.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 bool is_builtin(const char *command, const char *builtins[], size_t count) {
   for (size_t i = 0; i < count; i++) {
@@ -50,7 +53,7 @@ static int tokenize(char *input, char *argv[], int max_args) {
 
 
 int main(int argc, char *argv[]) {
-  const char *builtins[] = {"exit", "echo", "type"};
+  const char *builtins[] = {"exit", "echo", "type","pwd","cd"};
   char command[1024];
   setbuf(stdout, NULL);
   while (1) {
@@ -96,10 +99,46 @@ int main(int argc, char *argv[]) {
       }
     } 
 
-    else {
-      printf("%s: command not found\n", args[0]);
+    else if (strcmp(args[0], "pwd") == 0) {
+      char cwd[1024];
+      if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        printf("%s\n", cwd);
+      } else {
+        perror("getcwd");
+      }
     }
-  }
+    
+    else if (strcmp(args[0], "cd") == 0) {
+      const char *home = getenv("HOME");
+      if (arg_count < 2) {
+        printf("cd: missing argument\n");
+      } else if (strcmp(args[1], "~") == 0) {
+        if (chdir(home) != 0) {
+          printf("cd: %s: No such file or directory\n", home);
+        }
+      } else if (chdir(args[1]) != 0) {
+        printf("cd: %s: No such file or directory\n", args[1]);
+      }
+    }
 
+    else {
+      pid_t pid = fork();
+
+      if (pid < 0) {
+        perror("fork");
+        continue;
+      }
+
+      if (pid == 0) {
+        execvp(args[0], args);
+        printf("%s: command not found\n", args[0]);
+        exit(1);
+      }
+
+      int status;
+      waitpid(pid, &status, 0);
+    }
+
+  }
   return 0;
 }

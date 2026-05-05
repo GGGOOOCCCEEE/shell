@@ -1,0 +1,7 @@
+{
+  "cmake.configureOnOpen": true,
+  "cmake.useCMakePresets": "always",
+  "cmake.configurePreset": "wsl-debug",
+  "cmake.buildPreset": "wsl-debug",
+  "cmake.sourceDirectory": "${workspaceFolder}"
+}
